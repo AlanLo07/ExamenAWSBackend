@@ -4,17 +4,41 @@ import boto3
 dynamodb = boto3.resource("dynamodb", region_name="us-east-2")
 
 # Crear la tabla
-tabla = dynamodb.create_table(
-    TableName="Clientes",
-    KeySchema=[
-        {"AttributeName": "id", "KeyType": "HASH"},   # Clave primaria (Partition Key)
-    ],
-    AttributeDefinitions=[
-        {"AttributeName": "id", "AttributeType": "N"}
-    ],
-    ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5}  # Capacidad de lectura/escritura
-)
+try:
+    tabla = dynamodb.create_table(
+        TableName="Clientes",
+        KeySchema=[
+            {"AttributeName": "id", "KeyType": "HASH"},   # Clave primaria (Partition Key)
+        ],
+        AttributeDefinitions=[
+            {"AttributeName": "id", "AttributeType": "N"}
+        ],
+        ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5}  # Capacidad de lectura/escritura
+    )
 
-print("Creando tabla, espera un momento...")
-tabla.wait_until_exists()  # Espera hasta que la tabla esté creada
-print("¡Tabla creada exitosamente!")
+    print("Creando tabla, espera un momento...")
+    tabla.wait_until_exists()  # Espera hasta que la tabla esté creada
+    print("¡Tabla creada exitosamente!")
+except Exception as e:
+    print("La tabla ya existe.")
+
+try:
+
+    tabla = dynamodb.create_table(
+        TableName="Creditos",
+        KeySchema=[
+            {"AttributeName": "id", "KeyType": "HASH"},   # Clave primaria (Partition Key)
+        ],
+        AttributeDefinitions=[
+            {"AttributeName": "id", "AttributeType": "N"}
+        ],
+        ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5}  # Capacidad de lectura/escritura
+    )
+
+    print("Creando tabla, espera un momento...")
+    tabla.wait_until_exists()  # Espera hasta que la tabla esté creada
+    print("¡Tabla creada exitosamente!")
+except Exception as e:
+    print("La tabla ya existe.")
+
+
